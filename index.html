@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>欣欣炭火烧烤 · 开业全案营销方案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --charcoal: #1a1a1a;
+  --charcoal-light: #2d2d2d;
+  --fire: #d4561e;
+  --fire-glow: #ff6b35;
+  --amber: #f0b429;
+  --amber-light: #ffd166;
+  --cream: #fff5ee;
+  --cream-dark: #f5e6d3;
+  --smoke: #888;
+  --text: #f0e6d8;
+  --text-dim: #a09080;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--charcoal);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+
+/* ===== 粒子背景 ===== */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== 导航 ===== */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(26,26,26,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212,86,30,0.2);
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s;
+}
+.nav-bar.hidden { transform: translateY(-100%); }
+.nav-logo {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--fire);
+}
+.nav-logo span { color: var(--amber); }
+.nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.nav-links a:hover { color: var(--amber); background: rgba(212,86,30,0.15); }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 80%, rgba(212,86,30,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 50% 20%, rgba(240,180,41,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border: 1px solid var(--fire);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--fire-glow);
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(48px, 10vw, 96px);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 8px;
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+.hero h1 .fire-char { color: var(--fire); }
+.hero h1 .amber-char { color: var(--amber); }
+.hero-subtitle {
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text-dim);
+  font-weight: 300;
+  letter-spacing: 6px;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--amber);
+}
+.hero-stat-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.hero-address {
+  margin-top: 32px;
+  font-size: 14px;
+  color: var(--smoke);
+  letter-spacing: 2px;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+.hero-cta {
+  margin-top: 40px;
+  animation: fadeInUp 0.8s ease 0.5s both;
+}
+.hero-cta a {
+  display: inline-block;
+  padding: 14px 40px;
+  background: linear-gradient(135deg, var(--fire), var(--fire-glow));
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(212,86,30,0.3);
+}
+.hero-cta a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212,86,30,0.5);
+}
+
+/* ===== 火焰装饰线 ===== */
+.fire-divider {
+  position: relative;
+  z-index: 1;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.fire-divider .line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fire), transparent);
+}
+.fire-divider .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--fire);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+/* ===== 目录 ===== */
+.toc-section {
+  position: relative;
+  z-index: 1;
+  padding: 60px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.toc-title {
+  text-align: center;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 32px;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.toc-subtitle {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.toc-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.toc-btn:hover {
+  background: rgba(212,86,30,0.1);
+  border-color: var(--fire);
+  transform: translateY(-2px);
+}
+.toc-btn .num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fire);
+  min-width: 32px;
+}
+.toc-btn .label { flex: 1; }
+.toc-btn .arrow { color: var(--fire); font-size: 18px; transition: transform 0.3s; }
+.toc-btn:hover .arrow { transform: translateX(4px); }
+
+/* ===== 内容区 ===== */
+.content-section {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.chapter {
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.chapter.visible { opacity: 1; transform: translateY(0); }
+.chapter-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(212,86,30,0.2);
+}
+.chapter-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--fire);
+  line-height: 1;
+  opacity: 0.6;
+}
+.chapter-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 24px;
+  color: var(--cream);
+}
+.chapter p {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.9;
+  margin-bottom: 12px;
+}
+.chapter p.dim { color: var(--text-dim); font-size: 14px; }
+
+/* ===== 数据卡片 ===== */
+.data-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.data-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.data-card .val {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--amber);
+}
+.data-card .lbl {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ===== 表格 ===== */
+.chapter-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.chapter-table th {
+  background: rgba(212,86,30,0.2);
+  color: var(--amber);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 2px solid var(--fire);
+}
+.chapter-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--text);
+}
+.chapter-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ===== 活动卡片 ===== */
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.activity-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.activity-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--fire), var(--amber));
+}
+.activity-card .tag {
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(212,86,30,0.2);
+  color: var(--fire-glow);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.activity-card h4 {
+  font-size: 16px;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.activity-card p {
+  font-size: 13px !important;
+  color: var(--text-dim) !important;
+  margin-bottom: 4px !important;
+}
+
+/* ===== 预算高亮 ===== */
+.budget-highlight {
+  background: linear-gradient(135deg, rgba(212,86,30,0.15), rgba(240,180,41,0.1));
+  border: 1px solid rgba(212,86,30,0.3);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  margin: 20px 0;
+}
+.budget-highlight .amount {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--amber);
+}
+.budget-highlight .note {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ===== KPI 进度条 ===== */
+.kpi-bar-wrap { margin: 12px 0; }
+.kpi-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.kpi-bar-label .name { color: var(--text); }
+.kpi-bar-label .val { color: var(--amber); font-weight: 500; }
+.kpi-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.kpi-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--fire), var(--amber));
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+/* ===== 底部 ===== */
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 60px 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer .brand {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  color: var(--fire);
+  margin-bottom: 8px;
+}
+.footer .credit {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes ember {
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+  20% { opacity: 1; }
+  80% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-120px) scale(0.3); }
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 640px) {
+  .hero-stats { gap: 24px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .data-cards { grid-template-columns: 1fr 1fr; }
+  .activity-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- 导航 -->
+<nav class="nav-bar" id="navBar">
+  <div class="nav-logo">欣欣<span>炭火</span>烧烤</div>
+  <div class="nav-links" id="navLinks"></div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">✦ 专业餐饮开业方案 ✦</div>
+  <h1>
+    <span class="fire-char">欣欣</span><span class="amber-char">炭火</span><span class="fire-char">烧烤</span>
+  </h1>
+  <div class="hero-subtitle">开业全案营销方案</div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">40</div>
+      <div class="hero-stat-label">目标人均（元）</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">周边竞品</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">120</div>
+      <div class="hero-stat-label">门店面积（㎡）</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">80</div>
+      <div class="hero-stat-label">二楼室内（㎡）</div>
+    </div>
+  </div>
+  <div class="hero-address">📍 天津塘沽海洋科技园 · 工农村菜市场旁</div>
+  <div class="hero-cta">
+    <a href="#toc">🔥 查看完整方案</a>
+  </div>
+</section>
+
+<!-- 火焰装饰 -->
+<div class="fire-divider">
+  <span class="line"></span>
+  <span class="dot"></span>
+  <span class="line"></span>
+</div>
+
+<!-- 目录 -->
+<section class="toc-section" id="toc">
+  <h2 class="toc-title">全案营销方案目录</h2>
+  <p class="toc-subtitle">点击任意章节可直接跳转</p>
+  <div class="toc-grid" id="tocGrid"></div>
+</section>
+
+<!-- 内容 -->
+<section class="content-section" id="content"></section>
+
+<!-- 底部 -->
+<footer class="footer">
+  <div class="brand">欣欣炭火烧烤</div>
+  <p class="credit">编制：娄苏 | 美团SAAS &nbsp;·&nbsp; 2026年5月</p>
+</footer>
+
+<script>
+// ===== 粒子系统 =====
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let embers = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = -Math.random() * 0.2 - 0.1;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) this.reset();
+    if (this.y < canvas.height * 0.3) this.y = canvas.height;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(212, 86, 30, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+class Ember {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height - 20;
+    this.size = Math.random() * 3 + 1;
+    this.speedY = Math.random() * 1.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.life = 1;
+    this.decay = Math.random() * 0.008 + 0.005;
+  }
+  update() {
+    this.y -= this.speedY;
+    this.x += this.speedX;
+    this.life -= this.decay;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * this.life, 0, Math.PI * 2);
+    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * this.life);
+    gradient.addColorStop(0, `rgba(255, 107, 53, ${this.life})`);
+    gradient.addColorStop(0.5, `rgba(240, 180, 41, ${this.life * 0.6})`);
+    gradient.addColorStop(1, `rgba(212, 86, 30, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+  }
+}
+
+function spawnEmber() {
+  if (Math.random() < 0.15) {
+    embers.push(new Ember());
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  spawnEmber();
+  embers.forEach(e => { e.update(); e.draw(); });
+  embers = embers.filter(e => e.life > 0);
+  if (embers.length > 60) embers.splice(0, embers.length - 60);
+  requestAnimationFrame(animateParticles);
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+animateParticles();
+
+// ===== 章节数据 =====
+const chapters = [
+  { num: '01', title: '背景概述', subtitle: '门店信息 · 定位 · 核心目标',
+    content: `
+      <p>欣欣炭火烧烤位于<strong>天津塘沽海洋科技园</strong>，工农村小学附近、工农村菜市场旁，周边以社区居民和产业园区上班族为主。</p>
+      <p>门店一楼为操作间+外摆区域，二楼约80㎡室内用餐区，总面积约120㎡（含外摆）。主营<strong>炭火烧烤</strong>，夏季为旺季，人均消费约<strong>40元</strong>，采用扫码点餐模式。目前处于装修阶段，尚未开业。</p>
+      <div class="data-cards">
+        <div class="data-card"><div class="val">120㎡</div><div class="lbl">总面积（含外摆）</div></div>
+        <div class="data-card"><div class="val">40元</div><div class="lbl">人均消费</div></div>
+        <div class="data-card"><div class="val">80㎡</div><div class="lbl">二楼室内</div></div>
+        <div class="data-card"><div class="val">炭火</div><div class="lbl">烧烤工艺</div></div>
+      </div>
+      <p class="dim">核心目标：通过DM引流+团购引流+私域沉淀+开业活动+烧烤专项，实现开业火爆、持续复购。</p>
+    ` },
+  { num: '02', title: '整体策略框架', subtitle: '四管齐下开业活动体系',
+    content: `
+      <p>采用<strong>四管齐下</strong>策略体系，全方位覆盖引流、沉淀、转化、复购全链路：</p>
+      <table class="chapter-table">
+        <tr><th>策略</th><th>目的</th><th>载体</th><th>核心内容</th></tr>
+        <tr><td>大众点评团购</td><td>引流+提升曝光</td><td>DM单二维码①</td><td>19.9元双人烧烤套餐（前3天限量）</td></tr>
+        <tr><td>扫码领券私域</td><td>沉淀手机号+微信群</td><td>DM单二维码②</td><td>5元券（满30元可用）</td></tr>
+        <tr><td>开业现场活动</td><td>提升客单价+锁定复购</td><td>收银系统</td><td>第二份半价+满减赠券+发圈送菜</td></tr>
+        <tr><td>烧烤专项活动</td><td>带动尝鲜+长期复购</td><td>DM单+收银+微信群</td><td>三大活动A/B/C同步落地</td></tr>
+      </table>
+    ` },
+  { num: '03', title: 'DM单版面设计', subtitle: 'A5双面 · 双二维码 · 烧烤优惠栏',
+    content: `
+      <p><strong>规格：</strong>A5（148mm × 210mm），双面彩印，128g铜版纸</p>
+      <p><strong>【顶部】</strong>🔥 欣欣炭火烧烤 🔥 新店开业 · 全城钜惠</p>
+      <p><strong>【中间 双二维码并排】</strong></p>
+      <p>码①：大众点评团购码 — 扫码19.9元抢购开业双人烧烤套餐（前3天限量）<br>套餐含：羊肉串10串+鸡翅2串+烤肠2串+饮品2杯</p>
+      <p>码②：领券私域码 — 扫码免费领5元券（满30元可用）</p>
+      <p><strong>【下方优惠栏】</strong></p>
+      <p>凭此DM单到店，消费满50元免费送烤面包片一份<br>开业第一周，第二份烤串半价<br>到店发朋友圈，赠特色烤面包片一份<br>消费满100元，赠20元复购券（下次满100可用）</p>
+    ` },
+  { num: '04', title: '大众点评团购设计', subtitle: '套餐 · 定价 · 限量 · 有效期',
+    content: `
+      <table class="chapter-table">
+        <tr><th>项目</th><th>内容</th></tr>
+        <tr><td>团购名称</td><td>欣欣炭火烧烤·新店开业福利</td></tr>
+        <tr><td>套餐内容</td><td>羊肉串10串+鸡翅2串+烤肠2串+饮品2杯</td></tr>
+        <tr><td>售卖价格</td><td>19.9元（原价约50元）</td></tr>
+        <tr><td>限量方式</td><td>开业前3天限量，每人限1份</td></tr>
+        <tr><td>后台配置</td><td>每日定额放券，首日80份起</td></tr>
+        <tr><td>有效期</td><td>开业后14天内有效</td></tr>
+      </table>
+      <p class="dim">团购为线上购买、到店核销模式，不会出现到店后活动结束的尴尬情况。</p>
+    ` },
+  { num: '05', title: '扫码领券私域方案', subtitle: '领券链路 · 微信群运营 · 成本测算',
+    content: `
+      <p>沉淀周边客户手机号、拉入微信群，后续短信、社群一键触达，低成本召回到店。</p>
+      <p><strong>领券链路：</strong>扫码→输入手机号领5元券→到店报手机号核销→扫码入群领1元红包→接收社群活动消息</p>
+      <p><strong>微信群运营：</strong></p>
+      <p>每日上午10:00发布当日特价烤串（周一至周日轮换）<br>每日下午4:00发布当晚烧烤食材到货实拍<br>每周群专属福利：全场8.8折限定日</p>
+      <div class="data-cards">
+        <div class="data-card"><div class="val">1500张</div><div class="lbl">DM单投放</div></div>
+        <div class="data-card"><div class="val">5.8元</div><div class="lbl">单客获客成本</div></div>
+        <div class="data-card"><div class="val">67%</div><div class="lbl">核销率</div></div>
+        <div class="data-card"><div class="val">580元</div><div class="lbl">券+红包总成本</div></div>
+      </div>
+    ` },
+  { num: '06', title: '开业现场活动设计', subtitle: '基础活动 + 烧烤专项A/B/C',
+    content: `
+      <p><strong>基础活动组合：</strong></p>
+      <table class="chapter-table">
+        <tr><th>活动</th><th>内容</th><th>目的</th></tr>
+        <tr><td>19.9元引流套餐</td><td>双人烧烤开业福利套餐</td><td>聚拢人气</td></tr>
+        <tr><td>第二份半价</td><td>开业首周第二份烤串半价</td><td>提升客单</td></tr>
+        <tr><td>满100送20元券</td><td>消费满100元赠20元复购券</td><td>锁定复购</td></tr>
+        <tr><td>朋友圈赠烤面包片</td><td>发门店朋友圈赠特色烤面包片</td><td>裂变传播</td></tr>
+      </table>
+      <div class="activity-grid">
+        <div class="activity-card">
+          <div class="tag">方案A · 提升客单价</div>
+          <h4>满额赠串</h4>
+          <p>单桌消费满80元，赠送价值15元的烤串拼盘一份</p>
+          <p>鼓励顾客多点单，提升客单价</p>
+        </div>
+        <div class="activity-card">
+          <div class="tag">方案B · 锁定复购</div>
+          <h4>首单复购券</h4>
+          <p>每桌结账赠送复购券：满80元减15元</p>
+          <p>有效期7天，引导二次到店</p>
+        </div>
+        <div class="activity-card">
+          <div class="tag">方案C · 日常引流</div>
+          <h4>每日特价烤串</h4>
+          <p>每日一款固定烤串做特价，仅限当天有效</p>
+          <p>培养周边居民习惯性到店</p>
+        </div>
+      </div>
+    ` },
+  { num: '07', title: '大众点评合规运营', subtitle: '红线对照表 · 点星码规范',
+    content: `
+      <p>大众点评严禁利益交换式好评，违规会造成评价屏蔽、店铺扣分、权重降权。</p>
+      <table class="chapter-table">
+        <tr><th>类别</th><th>允许操作 ✔️</th><th>禁止操作 ✖️</th></tr>
+        <tr><td>收藏打卡</td><td>摆放官方点星码、收藏二维码</td><td>收藏送菜、点星送饮品</td></tr>
+        <tr><td>评价引导</td><td>礼貌口头请顾客自然点星收藏</td><td>五星好评送小菜、好评立减</td></tr>
+        <tr><td>朋友圈活动</td><td>发朋友圈赠烤面包片</td><td>无限制（朋友圈不属于点评平台）</td></tr>
+        <tr><td>收银台布置</td><td>只放官方点星、收藏码</td><td>摆放好评送菜台卡</td></tr>
+      </table>
+      <p class="dim">结账话术：「您要是吃得满意，方便的话帮我们点个星、收藏一下，非常感谢」</p>
+    ` },
+  { num: '08', title: '收银系统配合流程', subtitle: '后台设置 · 核销 · 加群',
+    content: `
+      <p>依托美团智能版收银，一站式完成设券、领券、核销、会员沉淀。</p>
+      <p><strong>步骤一：</strong>后台营销设置 — 创建满30元可用5元通用券，生成领券二维码；配置复购券（满80减15，7天有效）</p>
+      <p><strong>步骤二：</strong>顾客到店核销 — 报手机号→收银员查询→系统一键核销→自动留存会员</p>
+      <p><strong>步骤三：</strong>私域加群沉淀 — 收银台摆放加群二维码及红包规则立牌</p>
+      <p><strong>步骤四：</strong>合规口碑引导 — 固定摆放官方点星、收藏二维码</p>
+    ` },
+  { num: '09', title: '活动节奏总览', subtitle: '准备 → 预热 → 爆发 → 积累 → 稳定',
+    content: `
+      <table class="chapter-table">
+        <tr><th>阶段</th><th>时间</th><th>核心动作</th></tr>
+        <tr><td>准备期</td><td>开业前7天</td><td>点评入驻+团购上架+DM单设计印刷+收银后台配置</td></tr>
+        <tr><td>预热期</td><td>开业前3-5天</td><td>周边小区、菜市场、产业园集中派发DM单</td></tr>
+        <tr><td>爆发期</td><td>开业1-7天</td><td>19.9元套餐核销+第二份半价+朋友圈活动+烧烤A/B/C全落地</td></tr>
+        <tr><td>积累期</td><td>开业2-4周</td><td>会员体系运营+满额赠券+社群日常运营+特价烤串常态化</td></tr>
+        <tr><td>稳定期</td><td>开业2-3个月</td><td>私域精细化运营+复购活动策划+新品上新</td></tr>
+      </table>
+    ` },
+  { num: '10', title: 'DM单派发策略', subtitle: '地点 · 数量 · 时间',
+    content: `
+      <table class="chapter-table">
+        <tr><th>派发地点</th><th>数量</th><th>时间</th></tr>
+        <tr><td>周边小区</td><td>800张</td><td>开业前3-5天 19:00-21:00</td></tr>
+        <tr><td>工农村菜市场</td><td>300张</td><td>开业前3天全天</td></tr>
+        <tr><td>海洋科技园/产业园</td><td>400张</td><td>午市11:30-13:00</td></tr>
+        <tr><td><strong>合计</strong></td><td><strong>1500张</strong></td><td>2人×2天落地</td></tr>
+      </table>
+      <p class="dim">禁止强行敲门，遇管控小区改放公告栏/驿站；人均每日派发300-400张。</p>
+    ` },
+  { num: '11', title: '地推人员话术', subtitle: '各场景标准话术',
+    content: `
+      <p><strong>小区投放：</strong></p>
+      <p>「您好，我们是新开的欣欣炭火烧烤，主打炭火烤串，就在工农村菜市场旁边。给您留一张开业福利单，扫码19块钱就能吃双人烧烤套餐，还能领5元券，开业首周还有第二份半价活动，欢迎有空来尝尝。」</p>
+      <p><strong>产业园午市：</strong></p>
+      <p>「帅哥/美女，新店开业福利，扫码19块钱吃双人烧烤套餐，还能免费领5元优惠券，就在工农村菜市场旁边，下班后可以过来试试。」</p>
+      <p><strong>菜市场周边：</strong></p>
+      <p>「老板，我们旁边新开的烧烤店，给您留几张开业福利单，凭单消费满50送烤面包片，欢迎有空过来坐坐。」</p>
+    ` },
+  { num: '12', title: '客流低谷应对', subtitle: '各场景应对策略',
+    content: `
+      <table class="chapter-table">
+        <tr><th>低谷场景</th><th>应对策略</th></tr>
+        <tr><td>下雨天</td><td>社群定向发专属优惠券，文案：「下雨天不想做饭，群友烧烤专属9折」</td></tr>
+        <tr><td>工作日晚上</td><td>推出29.9元单人烧烤套餐（工作日限定）</td></tr>
+        <tr><td>周一至周三</td><td>周中烧烤特惠日，全场9折，提前社群预告</td></tr>
+        <tr><td>非夏季淡季</td><td>增加炭火烤鱼+暖锅组合，秋冬暖身品类</td></tr>
+      </table>
+    ` },
+  { num: '13', title: '收银员话术标准化', subtitle: '通用话术 + 烧烤话术 + 台卡',
+    content: `
+      <p><strong>通用五句话术：</strong></p>
+      <p>1. 您好，您的5元券已核销，剩余额度可下次使用。</p>
+      <p>2. 今天消费已满100元，送您一张20元复购券，下次满100元即可使用。</p>
+      <p>3. 您吃得满意的话，方便的话帮我们点个星、收藏一下，非常感谢。</p>
+      <p>4. 可以扫码加入门店社群，新人报到领1元红包，每天还有特价烤串预告。</p>
+      <p>5. 今天消费满80元，赠送您一份烤串拼盘，马上为您安排。</p>
+      <p><strong>烧烤专属话术：</strong></p>
+      <p>点单引导：「您几位用餐？我们新店开业，满80元送烤串拼盘，再点几串就到啦！」</p>
+      <p>结账提醒：「送您一张复购券，7天内满80减15，下次带朋友来吃烧烤很划算。」</p>
+    ` },
+  { num: '14', title: '预算汇总', subtitle: '各项费用明细',
+    content: `
+      <div class="budget-highlight">
+        <div class="amount">¥3,180 - 3,780</div>
+        <div class="note">总预算 · 投入小 · 引流稳 · 复购强</div>
+      </div>
+      <table class="chapter-table">
+        <tr><th>项目</th><th>费用（元）</th></tr>
+        <tr><td>DM单设计+印刷1500张</td><td>500-700</td></tr>
+        <tr><td>地推派发人工</td><td>400</td></tr>
+        <tr><td>5元券核销成本</td><td>500</td></tr>
+        <tr><td>社群新人1元红包</td><td>80</td></tr>
+        <tr><td>开业赠品（烤面包片+饮品）</td><td>800</td></tr>
+        <tr><td>方案A 满额赠串补贴</td><td>600</td></tr>
+        <tr><td>方案B 复购券核销补贴</td><td>400</td></tr>
+        <tr><td>方案C 每日特价毛利损耗</td><td>300</td></tr>
+      </table>
+    ` },
+  { num: '15', title: 'KPI目标', subtitle: '评分 · 收藏 · 核销率 · 营收',
+    content: `
+      <div class="kpi-bar-wrap">
+        <div class="kpi-bar-label"><span class="name">大众点评评分</span><span class="val">4.0星 → 4.2星</span></div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="kpi-bar-wrap">
+        <div class="kpi-bar-label"><span class="name">店铺收藏打卡量</span><span class="val">300个 → 600个</span></div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="kpi-bar-wrap">
+        <div class="kpi-bar-label"><span class="name">团购核销率</span><span class="val">70% → 75%</span></div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="kpi-bar-wrap">
+        <div class="kpi-bar-label"><span class="name">月度营业额</span><span class="val">5万 → 8万</span></div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:60%"></div></div>
+      </div>
+      <div class="kpi-bar-wrap">
+        <div class="kpi-bar-label"><span class="name">私域新增会员</span><span class="val">150人 → 400人</span></div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:65%"></div></div>
+      </div>
+    ` },
+  { num: '16', title: '竞品分析', subtitle: '周边竞品 + 差异化优势',
+    content: `
+      <table class="chapter-table">
+        <tr><th>竞品</th><th>距离</th><th>人均</th><th>优劣势</th></tr>
+        <tr><td>工农村老牌烧烤</td><td>500m</td><td>45元</td><td>口碑稳定但环境一般，无外摆</td></tr>
+        <tr><td>海洋科技园夜市烧烤</td><td>1km</td><td>35元</td><td>价格低但品质一般，无室内座位</td></tr>
+        <tr><td>工农村串串香</td><td>800m</td><td>50元</td><td>品类不同，存在竞争关系</td></tr>
+      </table>
+      <p><strong>欣欣炭火烧烤差异化优势：</strong></p>
+      <p>一楼外摆+二楼室内双场景 · 炭火烤串正宗工艺 · 扫码点餐数字化运营 · 菜市场旁黄金位置</p>
+    ` },
+  { num: '17', title: '总结', subtitle: '方案核心要点',
+    content: `
+      <p>本次方案采用<strong>四管齐下</strong>运营逻辑：大众点评团购引流+扫码领券私域沉淀+开业基础活动+社群日常运营+烧烤三大专项活动。</p>
+      <p>DM单全面升级，新增烧烤专项权益；严守大众点评合规运营红线；私域社群新增每日特价烤串栏目；烧烤通过「满额赠串+复购券锁客+每日特价常态化」三层布局。</p>
+      <p>整体总预算控制在<strong>¥3,180-3,780</strong>，投入小、引流稳、复购强，可直接落地执行。</p>
+      <p><strong>核心目标：</strong>点评评分4.0星+ · 收藏300+ · 团购核销率70% · 月营业额5万+（旺季可达8万+）</p>
+    ` }
+];
+
+// ===== 渲染 =====
+const tocGrid = document.getElementById('tocGrid');
+const content = document.getElementById('content');
+const navLinks = document.getElementById('navLinks');
+
+chapters.forEach((ch, i) => {
+  // 目录按钮
+  const btn = document.createElement('button');
+  btn.className = 'toc-btn';
+  btn.innerHTML = `<span class="num">${ch.num}</span><span class="label">${ch.title}</span><span class="arrow">→</span>`;
+  btn.addEventListener('click', () => {
+    document.getElementById(`ch-${i}`).scrollIntoView({ behavior: 'smooth' });
+  });
+  tocGrid.appendChild(btn);
+
+  // 导航链接
+  const link = document.createElement('a');
+  link.href = `#ch-${i}`;
+  link.textContent = ch.num;
+  link.title = ch.title;
+  navLinks.appendChild(link);
+
+  // 内容章节
+  const div = document.createElement('div');
+  div.className = 'chapter';
+  div.id = `ch-${i}`;
+  div.innerHTML = `
+    <div class="chapter-header">
+      <span class="chapter-num">${ch.num}</span>
+      <div>
+        <div class="chapter-title">${ch.title}</div>
+        <div style="font-size:13px;color:var(--text-dim);margin-top:4px">${ch.subtitle}</div>
+      </div>
+    </div>
+    ${ch.content}
+  `;
+  content.appendChild(div);
+});
+
+// ===== 滚动动画 =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+
+// ===== 导航栏显隐 =====
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const current = window.scrollY;
+  const nav = document.getElementById('navBar');
+  if (current > 200) {
+    nav.classList.toggle('hidden', current > lastScroll && current > 400);
+  } else {
+    nav.classList.remove('hidden');
+  }
+  lastScroll = current;
+});
+</script>
+</body>
+</html>
